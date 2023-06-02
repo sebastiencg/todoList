@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello invite!{% endblock %}
+
+{% block body %}
+    <h2> add invite</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>user</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for invite in area(profiles,todo) %}
+            <tr>
+                <td>{{ invite.username }}</td>
+                <td>
+                    <a href="{{ path('app_todo_addInvite',{'id': todo.id, 'profile': invite.id}) }}" class="btn btn-warning">add</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo index{% endblock %}
+
+{% block body %}
+    <h1>Todo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Statu</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todo in todos %}
+            {% if todo.author == app.user.profile %}
+                <tr>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.description }}</td>
+                    <td>
+                        {% if todo.statu != true %}
+                            <div class="rounded-circle border background bg-danger  border-danger" style="height: 25px; width: 25px">
+                            </div>
+                            {% else %}
+                                <div class="rounded-circle border background bg-success  border-success" style="height: 25px; width: 25px">
+                                </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ todo.createdAt ? todo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_todo_show', {'id': todo.id}) }} " class="btn btn-warning">show</a>
+                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}  " class="btn btn-primary">edit</a>
+                        <a href="{{ path('app_todo_finish', {'id': todo.id}) }}  " class="btn btn-success">Do</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2>Todo invite</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Statu</th>
+            <th>CreatedAt</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for todo in todos %}
+            {% if app.user.profile in todo.invite.values %}
+                <tr>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.description }}</td>
+                    <td>
+                        {% if todo.statu != true %}
+                            <div class="rounded-circle border background bg-danger  border-danger" style="height: 25px; width: 25px">
+                            </div>
+                        {% else %}
+                            <div class="rounded-circle border background bg-success  border-success" style="height: 25px; width: 25px">
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ todo.createdAt ? todo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_todo_show', {'id': todo.id}) }} " class="btn btn-warning">show</a>
+                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}  " class="btn btn-primary">edit</a>
+                        <a href="{{ path('app_todo_finish', {'id': todo.id}) }}  " class="btn btn-success">Do</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('app_todo_new') }}" class="btn btn-primary">Create new</a>
+{% endblock %}

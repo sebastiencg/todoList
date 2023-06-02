@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+<h1>
+    {% if app.user.profile.username %}
+    {{  app.user.profile.username  }}
+    {% else %}
+    no username
+    {% endif %}
+</h1>
+    <a class="btn btn-warning" href="{{ path('app_profile_edit') }}">add username</a>
+{% endblock %}
